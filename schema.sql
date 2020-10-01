@@ -24,7 +24,7 @@ CREATE TABLE categories_rewards (
 );
 
 INSERT INTO rewards (rewardId, rewardName) VALUES (1, "Free Gift Card");
-INSERT INTO rewards (rewardId, rewardName) VALUES (2, "300 Free Miles ");
+INSERT INTO rewards (rewardId, rewardName) VALUES (2, "300 Free Miles");
 INSERT INTO rewards (rewardId, rewardName) VALUES (3, "Free Dinner");
 INSERT INTO rewards (rewardId, rewardName) VALUES (4, "$100 Gift Card to Starbucks");
 INSERT INTO rewards (rewardId, rewardName) VALUES (5, "Free Laptop");

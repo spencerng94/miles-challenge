@@ -246,3 +246,19 @@ button {
 .feed {
   padding: 0px 10% 0px 10%;
 }
+
+.rewards {
+    text-align: center;
+}
+
+.categories {
+    text-align: center;
+}
+
+.category {
+    margin-right: 40px;
+}
+
+.reward {
+    margin-top: 30px;
+}

@@ -54,6 +54,33 @@ app.get('/api/categories', function(req, res) {
       })
 });
 
+// Get All Rewards and Current Categories
+app.get('api/categories_rewards'
+
+)
+
+// Post Reward having a New Category
+app.post('/api/categorize', (req, res) => {
+    let body = req.body;
+    console.log(body, 'logging body line 60');
+
+    var categorizeReward = function() {
+      return new Promise((resolve, reject) => {
+        db.categorizeReward(body.categoryId, body.rewardId, resolve, reject)
+      })
+    }
+
+    categorizeReward().then((data) => {
+      console.log(data, 'logging data from categorizeReward')
+      res.status(200);
+      res.send(data);
+    }).catch((err) => {
+      res.status(404).send({ error: 'Error from categorizeReward! '});
+      res.end();
+    })
+
+});
+
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
