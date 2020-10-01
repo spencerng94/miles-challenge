@@ -1,0 +1,52 @@
+const mysql = require('mysql');
+const mysqlConfig = require('./config.js');
+
+const getRewards = function(resolve, reject) {
+    const connection = mysql.createConnection(mysqlConfig);
+    connection.connect(function(err) {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+    });
+  
+    connection.query('SELECT * FROM rewards',
+      function (error, results, fields) {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else {
+          console.log(results, 'logging results from rewards')
+          resolve(results);
+        }
+      });
+  
+    connection.end();
+  };
+
+  const getCategories = function(resolve, reject) {
+    const connection = mysql.createConnection(mysqlConfig);
+    connection.connect(function(err) {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+    });
+  
+    connection.query('SELECT * FROM categories',
+      function (error, results, fields) {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else {
+          console.log(results, 'logging results from categories')
+          resolve(results);
+        }
+      });
+  
+    connection.end();
+  };
+
+  module.exports = {
+      getRewards, getCategories
+  };

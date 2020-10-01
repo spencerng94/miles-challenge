@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 class App extends React.Component {
     constructor() {
@@ -15,6 +16,14 @@ class App extends React.Component {
       this.setState({
         view: option
       });
+    }
+
+    getRewards() {
+        
+    }
+
+    getCategories() {
+        
     }
   
     renderView() {
@@ -39,6 +48,21 @@ class App extends React.Component {
               Undo
             </span>
           </div>
+
+        <div className="flex-container">
+
+          <div>
+              Rewards
+          </div>
+
+ 
+
+          <div>
+              Categories
+          </div>
+
+        </div>
+          
   
           <div className="main">
             {this.renderView()}
