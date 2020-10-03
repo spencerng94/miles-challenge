@@ -48,6 +48,29 @@ const getCategories = function(resolve, reject) {
     connection.end();
 };
 
+const getCategoriesRewards = function(resolve, reject) {
+    const connection = mysql.createConnection(mysqlConfig);
+    connection.connect(function(err) {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+    });
+  
+    connection.query('SELECT * FROM categories_rewards',
+      function (error, results, fields) {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else {
+          console.log(results, 'logging results from categories')
+          resolve(results);
+        }
+      });
+  
+    connection.end();
+};
+
 const categorizeReward = function(categoryId, rewardId, resolve, reject) {
     const connection = mysql.createConnection(mysqlConfig);
     connection.connect(function(err) {
@@ -74,8 +97,34 @@ const categorizeReward = function(categoryId, rewardId, resolve, reject) {
 
 };
 
+const deleteRewardCategory = function(categoryId, rewardId, resolve, reject) {
+    const connection = mysql.createConnection(mysqlConfig);
+    connection.connect(function(err) {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+            console.log('successfully connected to db!')
+        }
+    });
+
+    var deleteQuery = `DELETE FROM categories_rewards WHERE categoryId = ${categoryId} AND rewardId = ${rewardId}`;
+    
+    connection.query(deleteQuery,
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        console.log(results, 'logging results from connection.query')
+        resolve(results);
+      }
+    });
+  
+    connection.end();
+};
 
 
 module.exports = {
-      getRewards, getCategories, categorizeReward
+      getRewards, getCategories, getCategoriesRewards, categorizeReward, deleteRewardCategory
 };

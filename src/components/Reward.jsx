@@ -6,7 +6,8 @@ const Reward = (props) => {
     let dragStartHandler = (e) => {
         console.log('logging rewardId:', rewardId);
         let dragId = rewardId;
-        onDragStart(e, dragId);
+        let dragReward = reward;
+        onDragStart(e, dragId, dragReward);
     }
 
     return (<div 

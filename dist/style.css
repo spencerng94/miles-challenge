@@ -261,4 +261,30 @@ button {
 
 .reward {
     margin-top: 30px;
+    height:100px;
+    width:100px;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.droppable {
+  width: 150px;
+  height: 100vh;
+  right: 0;
+  top: 10;
+  background-color: #9E9E9E;
+  border-left: 1px dotted;
+}
+
+/* .draggable {
+  width: 100px;
+  height: 100px;
+  background-color: yellow;
+  margin: 5px auto;
+  line-height: 5em;
+} */
+
+.closeButton {
+  overflow: hidden;
 }
