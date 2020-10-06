@@ -21,8 +21,8 @@ const store = createStore(
     // persistedState,
     initialState,
     compose(
-      applyMiddleware(...middleware),
-      reduxWindow
+      applyMiddleware(...middleware)
+      // reduxWindow
     )
   );
 
