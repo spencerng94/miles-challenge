@@ -14,19 +14,30 @@ const middleware = [thunk];
 let devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && 
 window.__REDUX_DEVTOOLS_EXTENSION__();
 
-if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production') {
-    devTools = a => a;
+// if (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV === 'production') {
+//     devTools = a => a;
+// }
+
+if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'prod') {
+  store = createStore(rootReducer, initialState, compose(
+      applyMiddleware(...middleware)
+  ));
+} else {
+  store = createStore(rootReducer, initialState, compose(
+      applyMiddleware(...middleware),
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  ));
 }
 
-const store = createStore(
-    rootReducer,
-    // persistedState,
-    initialState,
-    compose(
-      applyMiddleware(...middleware)
-      // devTools
-    )
-);
+// const store = createStore(
+//     rootReducer,
+//     // persistedState,
+//     initialState,
+//     compose(
+//       applyMiddleware(...middleware)
+//       // devTools
+//     )
+// );
 
 store.subscribe(throttle(() => {
   saveState({
