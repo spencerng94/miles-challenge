@@ -10,7 +10,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(__dirname + '/../dist'));
 
-// app.use(express.static('App.js'))
 app.set('port', PORT)
 
 // Get All Rewards
@@ -24,7 +23,6 @@ app.get('/api/rewards', function(req, res) {
     console.log('reached get req')
 
     getRewards().then((data) => {
-        // console.log(data, "logging data from getRewards");
         res.status(200);
         res.send(data);
       }).catch((err) => {
@@ -45,7 +43,6 @@ app.get('/api/categories', function(req, res) {
     console.log('reached get req')
 
     getCategories().then((data) => {
-        // console.log(data, "logging data from getCategories");
         res.status(200);
         res.send(data);
       }).catch((err) => {
@@ -63,7 +60,26 @@ app.get('/api/categories_rewards', function(req, res) {
   };
 
   getCategoriesRewards().then((data) => {
-      // console.log(data, "logging data from getCategoriesRewards");
+      let categoriesRewardsData = data;
+      categoriesRewardsData.sort((a, b) => {
+        return a.rewardId - b.rewardId;
+      })    
+
+      let categoriesRewardsMatrix = [];
+
+      for (var i = 0; i < 5; i++) {
+          let array = [0,0,0,0,0];
+          categoriesRewardsMatrix.push(array);
+      }
+
+      for (var j = 0; j < categoriesRewardsData.length; j++) {
+          let rewardIdArrayIndex = categoriesRewardsData[j].rewardId - 1;
+          let categoryArrayIndex = categoriesRewardsData[j].categoryId - 1;
+          categoriesRewardsMatrix[rewardIdArrayIndex][categoryArrayIndex] = 1;
+      }
+
+      data = categoriesRewardsMatrix;
+
       res.status(200);
       res.send(data);
     }).catch((err) => {
@@ -83,7 +99,6 @@ app.post('/api/categorize', (req, res) => {
     }
 
     categorizeReward().then((data) => {
-      console.log(data, 'logging data from categorizeReward')
       res.status(200);
       res.send(data);
     }).catch((err) => {
@@ -95,9 +110,7 @@ app.post('/api/categorize', (req, res) => {
 
 // Delete a Reward from a Category
 app.delete('/api/categories_rewards', function(req, res) {
-  // console.log(req, 'line 98 logging req')
   let body = req.body;
-  console.log(body, 'line 99')
 
   var deleteRewardCategory = function() {
     return new Promise((resolve, reject) => {
@@ -106,7 +119,6 @@ app.delete('/api/categories_rewards', function(req, res) {
   }
 
   deleteRewardCategory().then((data) => {
-    console.log(data, 'logging data from deleteRewardCategory')
     res.status(200);
     res.send(data);
   }).catch((err) => {

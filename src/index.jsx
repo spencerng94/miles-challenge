@@ -1,107 +1,59 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import Categories from './components/Categories.jsx';
+import Loading from './components/Loading.jsx';
 import Rewards from './components/Rewards.jsx';
-import initialState from './initialState.jsx';
+import Save from './components/Save.jsx';
+import UndoRedo from './components/UndoRedo.jsx';
+import { saveState } from './redux/store/localStorage.js';
+import { getRewards, getCategories, getCategoriesRewards, loadRewards } from './redux/actions/getActions.js';
+import { postCategoryReward, deleteCategoryReward, undoCategoryReward } from './redux/actions/changeActions.js';
 
 class App extends React.Component {
-    constructor() {
-      super();
-      this.state = {
-        categories: [],
-        categoriesRewards: [],
-        isLoading: false,
-        rewards: [],
-        view: 'rewards'
-      }
-      this.changeView = this.changeView.bind(this);
-      this.getCategories = this.getCategories.bind(this);
-      this.getCategoriesRewards = this.getCategoriesRewards.bind(this);
-      this.getRewards = this.getRewards.bind(this);
+    constructor(props) {
+      super(props);
+      this.onGetCategories = this.onGetCategories.bind(this);
+      this.onGetCategoriesRewards = this.onGetCategoriesRewards.bind(this);
+      this.onGetRewards = this.onGetRewards.bind(this);
       this.handleRemove = this.handleRemove.bind(this);
+      this.handleSave = this.handleSave.bind(this);
+      this.handleUndo = this.handleUndo.bind(this);
       this.onDragOver = this.onDragOver.bind(this);
       this.onDragStart = this.onDragStart.bind(this);
       this.onDrop = this.onDrop.bind(this);
     }
-  
-    changeView(option) {
-      this.setState({
-        view: option
-      });
+
+    onGetRewards() {
+      this.props.getRewards();
     }
 
-    getRewards() {
-        axios.get(`/api/rewards/`).then((data) => {
-            let rewardsData = data.data;
-            this.setState({
-                rewards: rewardsData
-            });
-        })
+    onGetCategories() {
+      this.props.getCategories();
     }
 
-    getCategories() {
-        axios.get(`/api/categories`)
-            .then((data) => {
-                let categoriesData = data.data;
-                this.setState({
-                    categories: categoriesData
-                });
-            })
-    }
-
-    getCategoriesRewards() {
-        axios.get(`/api/categories_rewards`)
-            .then((data) => {
-                let categoriesRewardsData = data.data;
-
-                categoriesRewardsData.sort((a, b) => {
-                    return a.rewardId - b.rewardId;
-                })
-
-                console.log(categoriesRewardsData, 'logging categoriesRewardsData');
-
-                let categoriesRewardsMatrix = [];
-
-                for (var i = 0; i < 5; i++) {
-                    let array = [0,0,0,0,0];
-                    categoriesRewardsMatrix.push(array);
-                }
-
-                for (var j = 0; j < categoriesRewardsData.length; j++) {
-                    let rewardIdArrayIndex = categoriesRewardsData[j].rewardId - 1;
-                    let categoryArrayIndex = categoriesRewardsData[j].categoryId - 1;
-                    categoriesRewardsMatrix[rewardIdArrayIndex][categoryArrayIndex] = 1;
-                }
-
-                console.log(categoriesRewardsMatrix, 'logging matrix');
-
-                this.setState({
-                    categoriesRewards: categoriesRewardsMatrix
-                })
-            })
+    onGetCategoriesRewards() {
+      this.props.getCategoriesRewards();
     }
 
     handleRemove(rewardId, categoryId) {
-        // pass in categoryId && rewardId
-
         let deleteData = {
             categoryId: categoryId,
             rewardId: rewardId
         }
+        this.props.deleteCategoryReward(deleteData);
+    }
 
-        console.log(deleteData, 'line 98')
+    handleUndo(e, past) {
+      e.preventDefault();
+      past = this.props.past;
+      this.props.undoCategoryReward(past);
+    }
 
-        // axios.delete(`/api/categories_rewards`, deleteData)
-
-        axios({method: 'delete', url: `/api/categories_rewards`, data: deleteData})
-            .then((res) => {
-                console.log('successful DELETE request', res)
-                this.getCategoriesRewards();
-            })
-            .catch(err => console.log(err, 'error from axios.delete'));
-
-        
+    handleSave(e) {
+      e.preventDefault();
+      saveState(this.props);
+      alert('Saved to localStorage!');
     }
 
     onDragOver(e) {
@@ -110,79 +62,56 @@ class App extends React.Component {
     }
 
     onDragStart(e, id, rewardName, categoryId) {
-        console.log('onDragStart Id:', id);
-        console.log('onDragStart columnId:', categoryId);
         e.dataTransfer.setData("id", id);
         e.dataTransfer.setData("rewardName", rewardName);
         e.dataTransfer.setData("dragStartCategoryId", categoryId);
     }
 
     onDrop(e, dropCategory, dragStartCategory) {
-        console.log('reached onDrop');
-
-        // this is the rewardName;
         let rewardName = e.dataTransfer.getData("rewardName");
-
-        // this is the rewardCategory;
         let id = e.dataTransfer.getData("id");
-
-        // dropCategory is the category
         let dropData = {
             categoryId: dropCategory,
             rewardId: id
         }
-
-        if (this.state.categoriesRewards[id - 1][dropCategory - 1] !== 1) {
-             // POST request here (if it did not already exist);
-            axios.post(`api/categorize`, dropData)
-                .then((res) => {
-                    console.log('successful POST request', res)
-                    // this.setState({ categoriesRewards: dropData});
-                    this.getCategoriesRewards();
-                })
-                .catch(err => console.log(err, 'error from axios.post'));
+        if (this.props.categoriesRewards[id - 1][dropCategory - 1] !== 1) {
+            this.props.postCategoryReward(dropData);
         } else { 
             console.log('already exists!')
             alert("This reward is already categorized with this category!");
             return;
         }
-
-        // check to see if onDragStart dragged from existing category
         let dragStartCategoryId = e.dataTransfer.getData("dragStartCategoryId");
-
         let deleteData = {
             categoryId: dragStartCategoryId,
             rewardId: id
         }
-
         if (dragStartCategoryId >= 1) {
-
-            // DELETE request;
-            axios({method: 'delete', url: `/api/categories_rewards`, data: deleteData})
-            .then((res) => {
-                console.log('successful DELETE request', res)
-                this.getCategoriesRewards();
-            })
-            .catch(err => console.log(err, 'error from axios.delete'));
+            this.props.deleteCategoryReward(deleteData);
         }
-
-    }
-  
-    renderView() {
-
     }
 
     componentDidMount() {
-        this.getRewards();
-        this.getCategories();
-        this.getCategoriesRewards();
+        this.onGetRewards();
+        this.onGetCategories();
+        this.onGetCategoriesRewards();
     }
-
-    componentWillUnmount() {
     
-    }
-
     render() {
+      const { loadingReward, loadingCategory, loadingCategoryReward } = this.props;
+      let rewardsContent;
+      let categoriesContent;
+
+      if (loadingReward === true || loadingReward === undefined || loadingCategory === true || loadingCategory === undefined || loadingCategoryReward === true || loadingCategoryReward === undefined) {
+        console.log('it is loading');
+        console.log(this.props, 'this.props');
+        rewardsContent = (<Loading/>);
+        categoriesContent = (<Loading/>);
+      } else {
+        rewardsContent = (<Rewards onDragStart={this.onDragStart} 
+        rewards={this.props.rewards}/>);
+        categoriesContent = (<Categories categories={this.props.categories} categoriesRewards={this.props.categoriesRewards} onDragStart={this.onDragStart} handleRemove={this.handleRemove} rewards={this.props.rewards} onDrop={this.onDrop} onDragOver={this.onDragOver} past={this.props.past}/>)
+      }
       return (
         <div>
           <div className="nav">
@@ -190,68 +119,47 @@ class App extends React.Component {
               onClick={() => this.changeView('rewards')}>
               Rewards and Categories
             </span>
-            <span className={this.state.view === 'rewards'
-              ? 'nav-selected'
-              : 'nav-unselected'}
-              onClick={() => this.changeView('rewards')}>
-              Save
-            </span>
-            <span className="nav-unselected">
-              Undo
-            </span>
+              <Save handleSave={this.handleSave} state={this.props}/>
+              <UndoRedo handleUndo={this.handleUndo} past={this.props.past}/>
           </div>
 
         <div className="flex-container">
-
           <div className="rewards">
+            <div className="rewards-title">
               Rewards
+            </div>
               <hr />
-              <Rewards rewards={this.state.rewards} categoriesRewards={this.state.categoriesRewards} onDragStart={this.onDragStart}/>
+              <div>
 
+              </div>
+              {rewardsContent}
           </div>
-
- 
-
           <div className="categories">
+            <div className="categories-title">
               Categories
+            </div>
               <hr />
-              <Categories categories={this.state.categories} categoriesRewards={this.state.categoriesRewards} onDragStart={this.onDragStart} handleRemove={this.handleRemove} rewards={this.state.rewards} onDrop={this.onDrop} onDragOver={this.onDragOver}/>
+              {categoriesContent}
           </div>
 
-        </div>
-          
-  
+        </div> 
           <div className="main">
-            {this.renderView()}
           </div>
         </div>
       );
     }
   }
-  
-ReactDOM.render(<App />, document.getElementById('miles'));
 
-// import { createStore } from "redux";
+const mapStateToProps = (state) => ({
+  categories: state.categories,
+  rewards: state.rewards,
+  categoriesRewards: state.categoriesRewards,
+  loadingReward: state.loadingReward,
+  loadingCategory: state.loadingCategory,
+  loadingCategoryReward: state.loadingCategoryReward,
+  past: state.past,
+  present: state.present
+});
 
-// const reducer = (state, action) => {
-//     switch(action.type) {
-//         case "ADD":
-//             state = state + action.payload;
-//             break;
-//         case "SUBTRACT":
-//             break;
-//     }
+export default connect(mapStateToProps, {getRewards, getCategories, getCategoriesRewards, postCategoryReward, deleteCategoryReward, undoCategoryReward})(App);
 
-//     return state;
-// };
-
-// const store = createStore(reducer, 1);
-
-// store.subscribe(() => {
-//     console.log("Store updated", store.getState());
-// });
-
-// store.dispatch({
-//     type: "ADD",
-//     payload: 10
-// });

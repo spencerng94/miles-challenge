@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Francois+One|PT+Serif:400,400i,700,700i');
 
 body {
-  font-family: 'PT Serif', sans-serif;
+  /* font-family: 'PT Serif', sans-serif; */
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   margin: 0px;
   color: #2C3E50;
   background-color: #ECF0F1;
@@ -12,46 +13,6 @@ h2 {
   color: #2C3E50;
 }
 
-.feed-list-item {
-  min-height: 350px;
-  margin: 40px;
-  list-style: none;
-  border: 1px solid #77777769;
-  background-color: #fdfdfd;
-  border-radius: 4px;
-  padding: 30px 50px 0px 50px;
-  box-shadow: 0 0 1em #80808066;
-}
-
-.feed-list-item-image {
-  float: left;
-  width: 100%;
-  max-width: 350px;
-  margin-right: 20px;
-  margin-bottom: 5%;
-}
-
-.feed-list-item-title {
-  font-size: 1.8em;   
-  font-family: 'Francois One';
-  margin-bottom: 10px;
-}
-
-.feed-list-item-lede {
-  display: block;
-  margin-bottom: 50px;
-}
-
-.feed-list-item-byline {
-  font-size: .8em;
-  margin-bottom: 15px;
-  color: #777777;
-}
-
-.feed-list-item-byline-author {
-  font-weight: bolder;
-}
-
 .flex-container {
     display: flex;
 }
@@ -60,9 +21,19 @@ button {
   cursor: pointer;
   border: none;
   border-radius: 3px;
-  font-family: 'PT Serif', sans-serif;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   color: #ECF0F1;
   background-color: #E74C3C;
+}
+
+.close-button {
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  color: #ECF0F1;
+  background-color: #E74C3C;
+  float: right;
 }
 
 .post {
@@ -76,7 +47,7 @@ button {
 }
 
 .post-title {
-  font-family: 'Francois One';
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   line-height: 1.5em;
 }
 
@@ -97,120 +68,16 @@ button {
 .create h2 {
   border-bottom: 1px solid #777777;
   width: 90%;
-  font-family: 'Francois One';
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 }
 
-.create-editor {
-  width: 40%;
-  float: left;
-}
-
-.create-preview {
-  width: 60%;
-  float: right;
-  margin: 0 auto;
-}
-
-
-.create-input {
-  width: 80%;
-  display: block;
-  font-size: .9em;
-  height: 30px;
-  margin-bottom: 15px;
-  border: none;
-  padding: 5px;
-}
-
-.create-body-textarea {
-  width: 80%;
-  font-size: .9em;
-  display: block;
-  height: 400px;
-  border: none;
-  padding: 5px;
-  resize: none;
-}
-
-.create-submit-button {
-  margin-top: 15px;
-  font-size: .9em;
-  height: 30px;
-}
-
-.comment-input {
-  width: 60%;
-  font-size: .9em;
-  margin-top: 15px;
-  border: none;
-  padding: 5px;
-  resize: none;
-}
-
-.comment-submit {
-  margin-left: 15px;
-  font-size: .9em;
-  height: 30px;
-  transform: translateY(-50%);
-}
-
-.comment-entry {
-  margin-top: 5px;
-  padding: 10px;
-  border: 1px solid #3498DB;
-  list-style: none;
-  width: 70%;
-  font-size: .9em;
-}
-
-.comment-entry:hover {
-  background-color: rgba(52, 152, 219, 0.17);
-}
-
-.post-list-entry {
-  list-style: none;
-  border: 1px solid #3498DB;
-  margin-bottom: 20px;
-  padding: 10px;
-  width: 75%;
-}
-
-.post-list-entry:hover {
-  cursor: pointer;
-  background-color: rgba(52, 152, 219, 0.17);
-}
-
-.post-list-entry-title {
-  font-weight: bold;
-  font-size: 1.2em;
-  font-family: 'Francois One';
-}
-
-.post-list-entry-stats {
-  font-size: .8em;
-}
-
-.stats-list-item-views {
-  font-weight: bold;
-}
-
-.post-stats {
-  font-size: .8em;
-  cursor: pointer;
-  width: 75px;
-  display: inline;
-}
-
-.post-stats-comments {
-  margin-left: 20px;
-}
 
 .logo {
-  font-weight: bold;
-  font-size: 1.9em;
+  /* font-weight: bold; */
+  font-size: 2.0em;
   margin-right: auto;
   margin-left: 10px;
-  font-family: 'Francois One';
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   color: #ffffff;
 }
 
@@ -222,11 +89,12 @@ button {
 .nav {
   background-color: #3498DB;
   margin: 0px;
+  margin-bottom: 20px;
   padding: 10px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  font-family: 'Francois One';
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 }
 
 .nav-selected {
@@ -248,15 +116,21 @@ button {
 }
 
 .rewards {
-    text-align: center;
+  text-align: center;
+  font-size: 1.2em;
 }
 
 .categories {
-    text-align: center;
+  text-align: center;
+  font-size: 1.2em;
 }
 
 .category {
     margin-right: 40px;
+}
+
+.rewardDivider {
+  margin-top: 88px;
 }
 
 .reward {
@@ -266,6 +140,48 @@ button {
     border: 1px solid black;
     cursor: pointer;
     border-radius: 4px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.reward-category {
+  margin-top: 30px;
+  height:100px;
+  width:100px;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.reward-category-filled {
+  background-color:#3498DB;
+  margin-top: 30px;
+  height:100px;
+  width:100px;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.reward-category-text {
+  color: white;
+}
+
+.reward-text {
+  margin-top:10px;
+}
+
+.rewards-title {
+  text-align: center;
+  margin-left: 35px;
+  font-size: 1.4em;
+}
+
+.categories-title {
+  text-align: center;
+  font-size: 1.4em;
+  margin-left: 35px;
 }
 
 .droppable {
@@ -273,7 +189,6 @@ button {
   height: 100vh;
   right: 0;
   top: 10;
-  background-color: #9E9E9E;
   border-left: 1px dotted;
 }
 
@@ -287,4 +202,48 @@ button {
 
 .closeButton {
   overflow: hidden;
+}
+
+.category-header {
+  margin-left: 30px;
+}
+
+.loadingButton {
+    height: 40px;
+    width: 40px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    border-top-color: #fff;
+    animation: spinner2 600ms linear infinite;
+    }
+    @keyframes spinner2 {
+    to {
+    transform: rotate(360deg);
+    }
+}
+
+.saveButton {
+  background-color: #4CAF50; /* Green */
+  border: 1.5px solid black;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-right: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.undoButton {
+  background-color: #F8F8FF; /* Green */
+  border: 1.5px solid black;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }

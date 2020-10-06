@@ -1,3 +1,13 @@
-export function addArticle(payload) {
-    return { type: "ADD_ARTICLE", payload }
-};
+export const GET_REWARDS = 'GET_REWARDS';
+export const GET_CATEGORIES = 'GET_CATEGORIES';
+export const GET_CATEGORIES_REWARDS = 'GET_CATEGORIES_REWARDS';
+export const LOAD_REWARDS = 'LOAD_REWARDS';
+
+export const GET_ERRORS = 'GET_ERRORS';
+
+export const POST_CATEGORY_REWARD = 'POST_CATEGORY_REWARD';
+export const DELETE_CATEGORY_REWARD = 'DELETE_CATEGORY_REWARD';
+
+export const UNDO = 'UNDO';
+export const REDO = 'REDO';
+

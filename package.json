@@ -1,5 +1,5 @@
 {
-  "name": "miles-frontend-challenge",
+  "name": "miles-challenge",
   "version": "1.0.0",
   "dependencies": {
     "@babel/runtime": "^7.11.2",
@@ -13,12 +13,14 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "lodash": "^4.17.20",
     "mysql": "^2.18.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",

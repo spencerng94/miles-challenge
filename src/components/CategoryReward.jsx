@@ -7,12 +7,8 @@ const CategoryReward = (props) => {
     let currentCategoryId = categoryId;
 
     let onClickHandler = (rewardId, categoryId) => {
-        // console.log('in onClickHandler')
         handleRemove(currentRewardId, currentCategoryId);
     }
-
-
-    // TODO: add rewardId for dragStartHandler 
 
     let dragStartHandler = (e) => {
         console.log('logging rewardId:', rewardId);
@@ -21,25 +17,26 @@ const CategoryReward = (props) => {
         let dragCategory = categoryId;
         onDragStart(e, dragId, dragReward, dragCategory);
     }
-
    
     if (categoryRewardArray[rewardId - 1] === 1) {
         return(<div 
-            className="reward"
+            className="reward-category-filled"
             draggable
             onDragStart={dragStartHandler}
              >
                  <div className="closeButton">
-                 <button type="button" onClick={onClickHandler}>
+                 <button className="close-button" onClick={onClickHandler}>
               X
             </button>
                  </div>
-            {reward}
+                 <div className="reward-category-text">
+                    {reward}
+                 </div>
         </div>)
     }
 
     return(<div 
-                className="reward"
+                className="reward-category"
             >
     </div>)
 }
