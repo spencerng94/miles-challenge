@@ -13,6 +13,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "lodash": "^4.17.20",
     "mysql": "^2.18.1",
+    "nodemon": "^2.0.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
