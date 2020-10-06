@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS rewards;
+DROP DATABASE IF EXISTS heroku_e8971c7f16d6c74;
 
-CREATE DATABASE rewards;
+CREATE DATABASE heroku_e8971c7f16d6c74;
 
-USE rewards;
+USE heroku_e8971c7f16d6c74;
 
 CREATE TABLE rewards (
   rewardId int NOT NULL AUTO_INCREMENT,
