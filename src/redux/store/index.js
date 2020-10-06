@@ -23,10 +23,10 @@ const store = createStore(
     // persistedState,
     initialState,
     compose(
-      applyMiddleware(...middleware),
-      devTools
+      applyMiddleware(...middleware)
+      // devTools
     )
-  );
+);
 
 store.subscribe(throttle(() => {
   saveState({
