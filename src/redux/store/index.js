@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index.js';
 import throttle from 'lodash/throttle';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { loadState, saveState } from './localStorage.js'; 
 
 const initialState = {};
@@ -10,11 +11,12 @@ const middleware = [thunk];
 
 // const persistedState = loadState();
 
+
 const store = createStore(
     rootReducer,
     // persistedState,
     initialState,
-    compose(
+    composeWithDevTools(
       applyMiddleware(...middleware)
       // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
