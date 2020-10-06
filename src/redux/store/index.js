@@ -20,7 +20,7 @@ const store = createStore(
     rootReducer,
     // persistedState,
     initialState,
-    composeWithDevTools(
+    compose(
       applyMiddleware(...middleware),
       reduxWindow
     )
