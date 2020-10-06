@@ -11,12 +11,17 @@ const middleware = [thunk];
 
 // const persistedState = loadState();
 
+const windowFunction = window.__REDUX_DEVTOOLS_EXTENSION__
+? window.__REDUX_DEVTOOLS_EXTENSION__()
+: f => f;
+
 const store = createStore(
     rootReducer,
     // persistedState,
     initialState,
     composeWithDevTools(
-      applyMiddleware(...middleware)
+      applyMiddleware(...middleware),
+      windowFunction
     )
   );
 
