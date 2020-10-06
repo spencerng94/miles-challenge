@@ -9,6 +9,10 @@ const initialState = {};
 
 const middleware = [thunk];
 
+const reduxWindow = window.__REDUX_DEVTOOLS_EXTENSION__
+? window.__REDUX_DEVTOOLS_EXTENSION__()
+: f => f;
+
 // const persistedState = loadState();
 
 
@@ -17,8 +21,8 @@ const store = createStore(
     // persistedState,
     initialState,
     composeWithDevTools(
-      applyMiddleware(...middleware)
-      // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      applyMiddleware(...middleware),
+      reduxWindow
     )
   );
 
