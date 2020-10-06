@@ -11,27 +11,12 @@ const middleware = [thunk];
 
 // const persistedState = loadState();
 
-const composeEnhancers =
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      // options like actionSanitizer, stateSanitizer
-    }) : composeWithDevTools;
-const enhancer = composeEnhancers(
-  applyMiddleware(...middleware),
-  // other store enhancers if any
-);
-
-// const store = createStore(reducer, enhancer);
-
-
 const store = createStore(
     rootReducer,
     // persistedState,
     initialState,
-    enhancer
-    // composeWithDevTools(
-    //   applyMiddleware(...middleware)
-      // reduxWindow
+    composeWithDevTools(
+      applyMiddleware(...middleware)
     )
   );
 
