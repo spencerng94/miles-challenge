@@ -16,7 +16,7 @@ const composeEnhancers =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
       name: 'App', actionsBlacklist: ['REDUX_STORAGE_SAVE']
-    }) : compose;
+    }) : composeWithDevTools;
 
 const enhancer = composeEnhancers(
   applyMiddleware(...middleware),
