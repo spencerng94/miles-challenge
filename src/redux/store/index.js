@@ -11,25 +11,13 @@ const initialState = {};
 
 // const persistedState = loadState();
 
-// const devtools = process.env.NODE_ENV === 'test'
-//   ? x => x /* eslint-disable no-underscore-dangle */
-//   : window.__REDUX_DEVTOOLS_EXTENSION__
-//       && window.__REDUX_DEVTOOLS_EXTENSION__();
-// /* eslint-enable no-underscore-dangle */
-
-// const composeEnhancers =
-//   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
-//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-//       // options like actionSanitizer, stateSanitizer
-//     }) : composeWithDevTools;
-
 const composeEnhancers = composeWithDevTools({
   // options like actionSanitizer, stateSanitizer
 });
 
 const middleware = [
   applyMiddleware(thunk),
-  ...(window.__REDUX_DEVTOOLS_EXTENSION__ ? [window.__REDUX_DEVTOOLS_EXTENSION__()] : [])
+  // ...(window.__REDUX_DEVTOOLS_EXTENSION__ ? [window.__REDUX_DEVTOOLS_EXTENSION__()] : [])
 ]
 
 const enhancer = composeWithDevTools(
