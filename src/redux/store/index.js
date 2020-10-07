@@ -11,7 +11,7 @@ const middleware = [thunk];
 
 // const persistedState = loadState();
 
-const composeEnhancers = !__PROD__ ? (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() || compose;
 
 
 const store = createStore(
