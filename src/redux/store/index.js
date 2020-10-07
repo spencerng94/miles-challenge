@@ -17,12 +17,15 @@ const initialState = {};
 //       && window.__REDUX_DEVTOOLS_EXTENSION__();
 // /* eslint-enable no-underscore-dangle */
 
-const composeEnhancers =
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      // options like actionSanitizer, stateSanitizer
-    }) : composeWithDevTools;
+// const composeEnhancers =
+//   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+//       // options like actionSanitizer, stateSanitizer
+//     }) : composeWithDevTools;
 
+const composeEnhancers = composeWithDevTools({
+  // options like actionSanitizer, stateSanitizer
+});
 
 const middleware = [
   applyMiddleware(thunk),
