@@ -11,15 +11,22 @@ const middleware = [thunk];
 
 // const persistedState = loadState();
 
-const composeEnhancers =
-  process.env.NODE_ENV !== 'production' &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      name: 'App', actionsBlacklist: ['REDUX_STORAGE_SAVE']
-    }) : composeWithDevTools;
+const devtools = process.env.NODE_ENV === 'test'
+  ? x => x /* eslint-disable no-underscore-dangle */
+  : window.__REDUX_DEVTOOLS_EXTENSION__
+      && window.__REDUX_DEVTOOLS_EXTENSION__();
+/* eslint-enable no-underscore-dangle */
+
+// const composeEnhancers =
+//   process.env.NODE_ENV !== 'production' &&
+//   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+//       name: 'App', actionsBlacklist: ['REDUX_STORAGE_SAVE']
+//     }) : compose;
 
 const enhancer = composeEnhancers(
   applyMiddleware(...middleware),
+  devtools
   // other store enhancers if any
 );
 
