@@ -11,22 +11,26 @@ const initialState = {};
 
 // const persistedState = loadState();
 
-const devtools = process.env.NODE_ENV === 'test'
-  ? x => x /* eslint-disable no-underscore-dangle */
-  : window.__REDUX_DEVTOOLS_EXTENSION__
-      && window.__REDUX_DEVTOOLS_EXTENSION__();
-/* eslint-enable no-underscore-dangle */
+// const devtools = process.env.NODE_ENV === 'test'
+//   ? x => x /* eslint-disable no-underscore-dangle */
+//   : window.__REDUX_DEVTOOLS_EXTENSION__
+//       && window.__REDUX_DEVTOOLS_EXTENSION__();
+// /* eslint-enable no-underscore-dangle */
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      // options like actionSanitizer, stateSanitizer
+    }) : compose;
+
 
 const middleware = [
-  applyMiddleware(thunkMiddleware),
+  applyMiddleware(thunk),
   ...(window.__REDUX_DEVTOOLS_EXTENSION__ ? [window.__REDUX_DEVTOOLS_EXTENSION__()] : [])
 ]
 
 const enhancer = composeEnhancers(
   applyMiddleware(...middleware),
-  devtools
   // other store enhancers if any
 );
 
@@ -34,7 +38,7 @@ const store = createStore(
     rootReducer,
     // persistedState,
     initialState,
-    composeEnhancers(...middleware)
+    enhancer
     // enhancer
 );
 
