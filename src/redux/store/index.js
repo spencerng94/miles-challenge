@@ -17,12 +17,7 @@ const devtools = process.env.NODE_ENV === 'test'
       && window.__REDUX_DEVTOOLS_EXTENSION__();
 /* eslint-enable no-underscore-dangle */
 
-// const composeEnhancers =
-//   process.env.NODE_ENV !== 'production' &&
-//   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
-//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-//       name: 'App', actionsBlacklist: ['REDUX_STORAGE_SAVE']
-//     }) : compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const middleware = [
   applyMiddleware(thunkMiddleware),
@@ -39,7 +34,7 @@ const store = createStore(
     rootReducer,
     // persistedState,
     initialState,
-    compose(...middleware)
+    composeEnhancers(...middleware)
     // enhancer
 );
 
