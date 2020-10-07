@@ -7,7 +7,7 @@ import { loadState, saveState } from './localStorage.js';
 
 const initialState = {};
 
-const middleware = [thunk];
+// const middleware = [thunk];
 
 // const persistedState = loadState();
 
@@ -24,6 +24,11 @@ const devtools = process.env.NODE_ENV === 'test'
 //       name: 'App', actionsBlacklist: ['REDUX_STORAGE_SAVE']
 //     }) : compose;
 
+const middleware = [
+  applyMiddleware(thunkMiddleware),
+  ...(window.__REDUX_DEVTOOLS_EXTENSION__ ? [window.__REDUX_DEVTOOLS_EXTENSION__()] : [])
+]
+
 const enhancer = composeEnhancers(
   applyMiddleware(...middleware),
   devtools
@@ -34,7 +39,8 @@ const store = createStore(
     rootReducer,
     // persistedState,
     initialState,
-    enhancer
+    compose(...middleware)
+    // enhancer
 );
 
 store.subscribe(throttle(() => {
