@@ -11,17 +11,23 @@ const middleware = [thunk];
 
 // const persistedState = loadState();
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+  process.env.NODE_ENV !== 'production' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      name: 'App', actionsBlacklist: ['REDUX_STORAGE_SAVE']
+    }) : compose;
 
+const enhancer = composeEnhancers(
+  applyMiddleware(...middleware),
+  // other store enhancers if any
+);
 
 const store = createStore(
     rootReducer,
     // persistedState,
     initialState,
-    composeEnhancers(
-      applyMiddleware(...middleware)
-      // devTools
-    )
+    enhancer
 );
 
 store.subscribe(throttle(() => {
