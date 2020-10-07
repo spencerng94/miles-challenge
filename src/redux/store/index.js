@@ -32,9 +32,9 @@ const middleware = [
   ...(window.__REDUX_DEVTOOLS_EXTENSION__ ? [window.__REDUX_DEVTOOLS_EXTENSION__()] : [])
 ]
 
-const enhancer = composeEnhancers(
+const enhancer = compose(
   applyMiddleware(...middleware),
-  // other store enhancers if any
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 const store = createStore(
