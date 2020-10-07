@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/index.js';
 import throttle from 'lodash/throttle';
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { loadState, saveState } from './localStorage.js'; 
 
 const initialState = {};
@@ -18,7 +18,7 @@ const store = createStore(
     rootReducer,
     // persistedState,
     initialState,
-    composeEnhancers(
+    composeWithDevTools(
       applyMiddleware(...middleware)
       // devTools
     )
