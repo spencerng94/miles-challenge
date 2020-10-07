@@ -7,7 +7,7 @@ import { loadState, saveState } from './localStorage.js';
 
 const initialState = {};
 
-// const middleware = [thunk];
+const middleware = [thunk];
 
 // const persistedState = loadState();
 
@@ -15,14 +15,12 @@ const composeEnhancers = composeWithDevTools({
   // options like actionSanitizer, stateSanitizer
 });
 
-const middleware = [
-  applyMiddleware(thunk),
-  // ...(window.__REDUX_DEVTOOLS_EXTENSION__ ? [window.__REDUX_DEVTOOLS_EXTENSION__()] : [])
-]
-
-const enhancer = composeWithDevTools(
+const enhancer = compose(
   applyMiddleware(...middleware),
-  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  typeof window.__REDUX_DEVTOOLS_EXTENSION__ === "undefined"
+      ? a => a
+      : window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 const store = createStore(
