@@ -21,7 +21,7 @@ const composeEnhancers =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
       // options like actionSanitizer, stateSanitizer
-    }) : compose;
+    }) : composeWithDevTools;
 
 
 const middleware = [
